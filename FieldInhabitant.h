@@ -7,14 +7,21 @@
     #include<sstream>
     #include<cstdlib>
     using namespace std;
+
+    //The superclass for all other classes in the Project
     class FieldInhabintant
     {
         private:
+            //Symbol that will be printed onto the screen as the game is played.
             string symbol; 
         public:
+            //constructor
             FieldInhabintant(string input_symbol);
+            //getter
             string getsymbol();
+            //setter
             void setsymbol(string input_symbol);
+            //destructor 
             virtual ~FieldInhabintant();
     };
 
