@@ -352,4 +352,3 @@ void GameEngine::moveRabbits()
         }
     }
 }
-
