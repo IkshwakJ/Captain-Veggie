@@ -337,3 +337,112 @@ void GameEngine::moveRabbits()
     }
 }
 
+void GameEngine::spawnRabbits()
+{
+    int spawnheight, spawnwidth;
+    if( int(rabbits_on_field.size())<MAXNUMBEROFRABBITS)
+    {
+        bool spawn_one_rabbit = false;
+        do
+        {
+            spawnheight = rand()%height;
+            spawnwidth = rand()%width;    
+            if(field[spawnheight][spawnwidth] == nullptr)
+            {
+                Rabbit* temp = new Rabbit(spawnheight, spawnwidth);
+                rabbits_on_field.push_back(temp);
+                field[spawnheight][spawnwidth] = new Rabbit(spawnheight,spawnwidth);
+                spawn_one_rabbit = true;
+            }
+        }while(!spawn_one_rabbit);
+    }
+}
+
+int GameEngine::remainingVeggies()
+{
+    int count_veggies_on_field = 0;
+    for(int i = 0; i<height; i++)
+    {
+        for(int j = 0; j<width; j++)
+        {
+            if(dynamic_cast<Veggie*>(field[i][j]))
+            {
+                count_veggies_on_field++;
+            }
+        }
+    }
+    return count_veggies_on_field;
+}
+
+void GameEngine::intro()
+{
+    cout<<"Welcome to Captain Veggie!"<<endl;
+    cout<<"The rabbits are invading your garden and you must harvest"<<endl;
+    cout<<"as many vegetables as possible before the rabbits eat them"<<endl;
+    cout<<"all! Each vegetable is worth a different number of points"<<endl;
+    cout<<"so go for the high score!"<<endl;
+    cout<<"\nThe vegetables are: "<<endl;
+
+    for(long long unsigned int i = 0; i<possible_veggie.size(); i++)    
+    {
+        cout<<possible_veggie[i]->getsymbol()<<": "<<possible_veggie[i]->getveg_type()<<", "<<possible_veggie[i]->getpt_val()<<endl;
+    }
+    cout<<"\nCaptain Veggie is V, and the rabbits are R's.\n"<<endl;
+    cout<<"Catching a rabbit is worth 5 points, but more are"<<endl;
+    cout<<"always on the way!\n"<<endl;
+    // cout<<"Make sure to watch out for the snake on the field!"<<endl;
+    // cout<<"The snake is S, it eats the rabbits"<<endl;
+    // cout<<"and is trying to bite you!"<<endl;
+    // cout<<"If you are bitten you will lose the newest 5 vegetables!\n"<<endl;
+    cout<<"Good Luck!\n"<<endl;
+}
+
+void GameEngine::printField()
+{
+    cout<<"\33[34m#\33[0m";
+    for(int j = 0; j<width; j++)
+    {
+        cout<<"\33[34m###\33[0m";
+    }
+    cout<<"\33[34m#\33[0m"<<endl;
+    for(int i = 0; i<height; i++)
+    {
+        cout<<"\33[34m#\33[0m";
+        for(int j = 0; j<width; j++)
+        {
+            if(field[i][j]!=nullptr)
+            {
+                cout<<" "<<field[i][j]->getsymbol()<<" ";
+            }
+            else
+            {
+                cout<<"   ";
+            }
+        }
+        cout<<"\33[34m#\33[0m"<<endl;
+    }
+    cout<<"\33[34m#\33[0m";
+    for(int j = 0; j<width; j++)
+    {
+        cout<<"\33[34m###\33[0m";
+    }
+    cout<<"\33[34m#\33[0m"<<endl;
+}
+
+int GameEngine::getScore()
+{
+    return score;
+}
+
+void GameEngine::timerTick()
+{
+    if(timer%5 == 0)
+    {
+        if(int(rabbits_on_field.size())<MAXNUMBEROFRABBITS)
+        {
+            cout<<"Oh no! Here comes another rabbit!"<<endl;
+        }
+        spawnRabbits();
+    }
+    timer++;    
+}
