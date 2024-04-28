@@ -337,7 +337,6 @@ void GameEngine::moveRabbits()
             }
             else if((dynamic_cast<Veggie*>(field[new_h][new_w])))
             {
-                cout << "rabbit gouing to eat";
                 delete field[new_h][new_w];
                 field[new_h][new_w] = nullptr;
                 field[new_h][new_w] = new Rabbit(new_h,new_w);
