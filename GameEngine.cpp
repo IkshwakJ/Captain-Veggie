@@ -446,3 +446,161 @@ void GameEngine::timerTick()
     }
     timer++;    
 }
+
+void GameEngine::moveRabbits()
+{
+    long long unsigned int bunny_count = rabbits_on_field.size();
+    int direction; //there are 8 directions to travel in. The 12 o'clock direction is 0 is incremented in the clockwise direction.
+    int bunnyheight, bunnywidth, new_h, new_w;
+    bool bunny_move = false;//to check if the bunny can move in an empty map within bounds.
+    for(long long unsigned int i = 0; i<bunny_count; i++)
+    {
+        bunny_move = false;
+        direction = rand()%8;
+        bunnyheight = rabbits_on_field[i]->getheightpos();
+        bunnywidth = rabbits_on_field[i]->getwidthpos();
+        switch(direction)
+        {
+            case 0:
+                if(bunnyheight != 0)
+                {
+                    bunny_move = true;
+                    new_h = bunnyheight-1;
+                    new_w = bunnywidth;
+                }
+                break;
+            case 1:
+                if(bunnyheight != 0 && bunnywidth != width-1)
+                {
+                    bunny_move = true;
+                    new_h = bunnyheight-1;
+                    new_w = bunnywidth+1;                   
+                }
+                break;
+            case 2:
+                if(bunnywidth != width-1)
+                {
+                    bunny_move = true; 
+                    new_h = bunnyheight;
+                    new_w = bunnywidth+1;                 
+                }
+                break;
+            case 3:
+                if(bunnyheight != height-1 && bunnywidth != width-1)
+                {
+                    bunny_move = true;
+                    new_h = bunnyheight+1;
+                    new_w = bunnywidth+1;
+                }
+                break;
+            case 4:
+                if(bunnyheight != height-1)
+                {
+                    bunny_move = true;
+                    new_h = bunnyheight+1;
+                    new_w = bunnywidth;
+                }
+                break;
+            case 5:
+                if(bunnyheight != height-1 && bunnywidth != 0)
+                {
+                    bunny_move = true;
+                    new_h = bunnyheight+1;
+                    new_w = bunnywidth-1;
+                }
+                break;
+            case 6:
+                if(bunnywidth != 0)
+                {
+                    bunny_move = true;
+                    new_h = bunnyheight;
+                    new_w = bunnywidth-1;
+                }
+                break;
+            case 7:
+                if(bunnyheight != 0 && bunnywidth != 0)
+                {
+                    bunny_move = true;
+                    new_h = bunnyheight-1;
+                    new_w = bunnywidth-1;
+                }
+                break;
+        }
+        if(bunny_move)
+        {
+            if(field[new_h][new_w] == nullptr)
+            {
+                field[new_h][new_w] = new Rabbit(new_h,new_w);
+                rabbits_on_field[i]->setheightpos(new_h);
+                rabbits_on_field[i]->setwidthpos(new_w);
+                delete field[bunnyheight][bunnywidth];
+                field[bunnyheight][bunnywidth] = nullptr;
+            }
+            else if((dynamic_cast<Veggie*>(field[new_h][new_w])))
+            {
+                cout << "rabbit gouing to eat";
+                delete field[new_h][new_w];
+                field[new_h][new_w] = nullptr;
+                field[new_h][new_w] = new Rabbit(new_h,new_w);
+                rabbits_on_field[i]->setheightpos(new_h);
+                rabbits_on_field[i]->setwidthpos(new_w);
+                delete field[bunnyheight][bunnywidth];
+                field[bunnyheight][bunnywidth] = nullptr;
+            }
+            else
+            {
+                bunny_move = false;
+            }
+        }
+    }
+}
+
+// @param The input direction is +1 or -1 to move up or down respectively
+void GameEngine::moveCptVertical(int input_direction)
+{
+    int h = player->getheightpos(), w = player->getwidthpos();
+    Veggie* check_template_veggie;
+    Rabbit* check_template_rabbit;
+    Snake* check_template_snake;
+    if((h + input_direction) >= 0 && (h + input_direction) < height)
+    {
+        player->setheightpos(h+input_direction);
+        if(field[h+input_direction][w] == nullptr)
+        {   
+            field[h+input_direction][w] = new Captain(h+input_direction, w);
+            field[h+input_direction][w] = player;
+            field[h][w] = nullptr;
+        }
+        else if((check_template_veggie = dynamic_cast<Veggie*>(field[h+input_direction][w])))
+        {
+            cout<<"Yummy! A delicious "<<check_template_veggie->getveg_type()<<endl;   
+            player->addveggie(check_template_veggie);
+            score = score + check_template_veggie->getpt_val();
+            delete field[h+input_direction][w];
+            field[h+input_direction][w] = new Captain(h+input_direction, w);
+            field[h+input_direction][w] = player;
+            field[h][w] = nullptr;
+        }
+        else if((check_template_rabbit = dynamic_cast<Rabbit*>(field[h+input_direction][w])))
+        {   
+            for(long long unsigned int i  = 0; i<rabbits_on_field.size(); i++)
+            {
+                if(rabbits_on_field[i]->getheightpos() == check_template_rabbit->getheightpos() && rabbits_on_field[i]->getwidthpos() == check_template_rabbit->getwidthpos())
+                {
+                    delete rabbits_on_field[i];
+                    rabbits_on_field.erase(rabbits_on_field.begin() + i);
+                }
+            }
+            cout<<"Finally got one of those pesky bunnies!"<<endl;
+            score = score + RABBITPOINTS;
+            delete field[h+input_direction][w];
+            field[h+input_direction][w] = new Captain(h+input_direction, w);
+            field[h+input_direction][w] = player;
+            field[h][w] = nullptr;
+        }
+    }
+    else
+    {
+        cout<<"You can't move that way!"<<endl;
+    }
+}
