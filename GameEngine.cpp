@@ -604,3 +604,101 @@ void GameEngine::moveCptVertical(int input_direction)
         cout<<"You can't move that way!"<<endl;
     }
 }
+
+
+void GameEngine::moveCptHorizontal(int input_direction)
+{
+    int h = player->getheightpos(), w = player->getwidthpos();
+    Veggie* check_template_veggie;
+    Rabbit* check_template_rabbit;
+    Snake* check_template_snake;
+    if((w + input_direction) >= 0 && (w + input_direction) < width)
+    {
+        player->setwidthpos(w+input_direction);
+        if(field[h][w+input_direction] == nullptr)
+        {   
+            field[h][w+input_direction] = new Captain(h, w+input_direction);
+            field[h][w+input_direction] = player;
+            field[h][w] = nullptr;
+        }
+        else if((check_template_veggie = dynamic_cast<Veggie*>(field[h][w+input_direction])))
+        {   
+            cout<<"Yummy! A delicious "<<check_template_veggie->getveg_type()<<endl; 
+            player->addveggie(check_template_veggie);
+            score = score + check_template_veggie->getpt_val();
+            delete field[h][w+input_direction];
+            field[h][w+input_direction] = new Captain(h, w+input_direction);
+            field[h][w+input_direction] = player;
+            field[h][w] = nullptr;
+        }
+        else if((check_template_rabbit = dynamic_cast<Rabbit*>(field[h][w+input_direction])))
+        {   
+            for(long long unsigned int i  = 0; i<rabbits_on_field.size(); i++)
+            {
+                if(rabbits_on_field[i]->getheightpos() == check_template_rabbit->getheightpos() && rabbits_on_field[i]->getwidthpos() == check_template_rabbit->getwidthpos())
+                {
+                    delete rabbits_on_field[i];
+                    rabbits_on_field.erase(rabbits_on_field.begin() + i);
+                }
+            }
+            cout<<"Finally got one of those pesky bunnies!"<<endl;
+            score = score + RABBITPOINTS;
+            delete field[h][w+input_direction];
+            field[h][w+input_direction] = new Captain(h, w+input_direction);
+            field[h][w+input_direction] = player;
+            field[h][w] = nullptr;
+        }
+        else if((check_template_snake = dynamic_cast<Snake*>(field[h][w+input_direction])))
+        {   
+            delete field[h][w+input_direction];
+            field[h][w+input_direction] = new Captain(h, w+input_direction);
+            field[h][w+input_direction] = player;
+            field[h][w] = nullptr;
+            //The snake will be called next and thus will bite the player
+        }
+    }
+    else
+    {
+        cout<<"You can't move that way!"<<endl;
+    }
+}
+
+void GameEngine::moveCaptain()
+{
+    string input;
+    int direction;
+    cout<<"Would you like to move up(W), down(S), left(A), or right(D): ";
+    cin>>input;
+    if(input.compare("W") == 0 || input.compare("w") == 0)
+    {
+        direction = -1;
+        moveCptVertical(direction);
+    }
+    else if(input.compare("S") == 0 || input.compare("s") == 0)
+    {
+        direction = 1;
+        moveCptVertical(direction);
+    }
+    else if(input.compare("A") == 0 || input.compare("a") == 0)
+    {
+        direction = -1;
+        moveCptHorizontal(direction);
+    }
+    else if(input.compare("D") == 0 || input.compare("d") == 0)
+    {
+        direction = 1;
+        moveCptHorizontal(direction);
+    }
+    else
+    {
+        cout<<input<<" is not a valid option!"<<endl;
+    }
+}
+
+void GameEngine::gameOver()
+{
+    cout<<"GAME OVER!"<<endl;
+    cout<<"You managed to harvest the following vegetables:"<<endl;
+    player->printallveggies();
+    cout<<"Your score was: "<<score<<endl;
+}
