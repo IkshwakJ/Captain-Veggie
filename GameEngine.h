@@ -3,6 +3,7 @@
     #include"Captain.h"
     #include"Rabbit.h"
     #include"Veggie.h"
+    #include"Snake.h"
     // This class controls all the elements of the game. 
     class GameEngine
     {
