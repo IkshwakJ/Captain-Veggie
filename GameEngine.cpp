@@ -1,4 +1,5 @@
 #include"GameEngine.h"
+// @brief This function intializes the vegetables and creates a Captain variable for the player, it sets the score and timer to zero.
 void GameEngine::initialzeGame()
 {
     initVeggies();
@@ -7,6 +8,7 @@ void GameEngine::initialzeGame()
     timer = 0;
 }
 
+// @brief This function reads a file that the user specifies to create a field of the size defined in the file, and fills it with random vegetables. 
 void GameEngine::initVeggies()
 {
     string filename, data_input, veggie_name, veggie_symbol;
@@ -15,6 +17,7 @@ void GameEngine::initVeggies()
     int veggie_point_value, height_rand, width_rand;
     long long unsigned int number_of_veggies = 0, veggie_rand;
     bool flag;
+    //Loop to open a file specified by the user.
     do
     {
         cout<<"Please enter the name of the vegetable point file: ";
@@ -25,6 +28,8 @@ void GameEngine::initVeggies()
             cout<<filename<<" does not exist!"<<endl;    
         }
     }while(!filestream.is_open());
+
+    //Reading file to create a field and set up the possible vegetables that can fill the field.
     while(!filestream.eof())
     {
         getline(filestream,data_input);
@@ -54,10 +59,11 @@ void GameEngine::initVeggies()
             
         }
     }
-    // The file has been closed.
+    //The file has been closed.
     filestream.close();
     line_input.clear();
 
+    //Creating the field.
     field = new FieldInhabintant**[height];
     for(int i = 0; i<height; i++)
     {
@@ -94,9 +100,11 @@ void GameEngine::initVeggies()
             }
         }while(flag == false);
     }
+    //The following function prints the field onto the terminal.
     printField();
 }
 
+// @brief This function creates a Captain variable for the player and places the player randomly on the field.
 void GameEngine::initCaptain()
 {
     int capheightpos, capwidthpos;
@@ -119,6 +127,7 @@ void GameEngine::initCaptain()
     while(flag == false);
 }
 
+// @brief Creates one Rabbit and adds it to the vector of Rabbits and adds it to the field at a random position.
 void GameEngine::spawnRabbits()
 {
     int spawnheight, spawnwidth;
@@ -140,6 +149,8 @@ void GameEngine::spawnRabbits()
     }
 }
 
+// @brief This function counts the number of vegetables on the field.
+// @return the number of vegetables on the field as an integer.
 int GameEngine::remainingVeggies()
 {
     int count_veggies_on_field = 0;
@@ -156,6 +167,7 @@ int GameEngine::remainingVeggies()
     return count_veggies_on_field;
 }
 
+// @brief This function introduces the player to the game and shows the possible points for each catch and what the snake does.
 void GameEngine::intro()
 {
     cout<<"Welcome to Captain Veggie!"<<endl;
@@ -173,12 +185,13 @@ void GameEngine::intro()
     cout<<"Catching a rabbit is worth 5 points, but more are"<<endl;
     cout<<"always on the way!\n"<<endl;
     // cout<<"Make sure to watch out for the snake on the field!"<<endl;
-    // cout<<"The snake is S, it eats the rabbits"<<endl;
+    // cout<<"The snake is S, it eats the rabbits, if it eats a rabbit it rests for 5 clock ticks."<<endl;
     // cout<<"and is trying to bite you!"<<endl;
     // cout<<"If you are bitten you will lose the newest 5 vegetables!\n"<<endl;
     cout<<"Good Luck!\n"<<endl;
 }
 
+// @brief This function prints the field and the characters that fill the field.
 void GameEngine::printField()
 {
     cout<<"\33[34m#\33[0m";
@@ -211,13 +224,16 @@ void GameEngine::printField()
     cout<<"\33[34m#\33[0m"<<endl;
 }
 
+// @brief This function returns the score that the player gained.
 int GameEngine::getScore()
 {
     return score;
 }
 
+// @brief This function increments the clock by 1 and spawns a rabbit if the number of rabbits on the field is less than MAXNUMBEROFRABBITS. 
 void GameEngine::timerTick()
 {
+    // The rabbits are spawned every 5 cycles.
     if(timer%5 == 0)
     {
         if(int(rabbits_on_field.size())<MAXNUMBEROFRABBITS)
@@ -229,6 +245,7 @@ void GameEngine::timerTick()
     timer++;    
 }
 
+// @brief This function moves the rabbits randomly and removes the vegetables if a rabbit lands on them.
 void GameEngine::moveRabbits()
 {
     long long unsigned int bunny_count = rabbits_on_field.size();
@@ -320,7 +337,6 @@ void GameEngine::moveRabbits()
             }
             else if((dynamic_cast<Veggie*>(field[new_h][new_w])))
             {
-                cout << "rabbit gouing to eat";
                 delete field[new_h][new_w];
                 field[new_h][new_w] = nullptr;
                 field[new_h][new_w] = new Rabbit(new_h,new_w);
@@ -335,7 +351,7 @@ void GameEngine::moveRabbits()
             }
         }
     }
-}
+ }
 
 void GameEngine::spawnRabbits()
 {
