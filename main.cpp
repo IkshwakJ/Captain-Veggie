@@ -2,7 +2,7 @@
 
     int main()
     {
-        srand((150));
+        srand(unsigned(time(0)));
         GameEngine game;
         game.initialzeGame();
         game.intro();
@@ -15,6 +15,7 @@
             game.printField();
             game.moveRabbits();
             game.moveCaptain();
+            game.moveSnake();
             remaining_vegetables = game.remainingVeggies();
             game.timerTick();
             cout<<endl;
