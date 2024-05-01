@@ -230,6 +230,11 @@ int GameEngine::getScore()
     return score;
 }
 
+void GameEngine::setScore(int val)
+{
+    this->score = val;
+}
+
 // @brief This function increments the clock by 1 and spawns a rabbit if the number of rabbits on the field is less than MAXNUMBEROFRABBITS. 
 void GameEngine::timerTick()
 {
@@ -499,4 +504,100 @@ void GameEngine::gameOver()
     cout<<"You managed to harvest the following vegetables:"<<endl;
     player->printallveggies();
     cout<<"Your score was: "<<score<<endl;
+}
+
+void GameEngine::timerTickSnake()
+{
+    if(timer%5 == 0)
+    {
+       timer++;  
+    }
+      
+}
+
+void GameEngine::initSnake() {
+    // Find a random, unoccupied slot on the field
+    int row, col;
+    do {
+        row = rand() % height;
+        col = rand() % width;
+    } while (field[row][col] != nullptr); // Keep trying until an unoccupied slot is found
+
+    // Instantiate a new Snake object and store it in the snake member variable
+    snake = new Snake(row, col);
+}
+
+void GameEngine::moveSnake() {
+    // Get the captain's position
+    int captainRow = player->getheightpos();
+    int captainCol = player->getwidthpos();
+
+     // Determine the direction to move
+    int newRow = snake->getheightpos();
+    int newCol = snake->getwidthpos();
+
+    // Calculate the direction to move towards the captain
+    int rowDiff = captainRow - newRow;
+    int colDiff = captainCol - newCol;
+
+    Veggie* template_veggie;
+    Rabbit* template_rabbit;
+    Snake* template_snake;
+    Captain* template_captain;
+   
+    if (abs(rowDiff) > abs(colDiff)) {
+        if (rowDiff > 0 && newRow < height - 1) {   //field[newRow + 1][newCol] == nullptr
+            newRow++; // Move down
+        } else if (rowDiff < 0 && newRow > 0 ) {    //&& field[newRow - 1][newCol] == nullptr
+            newRow--; // Move up
+        }
+    } else {
+        if (colDiff > 0 && newCol < width - 1) {    // && field[newRow][newCol + 1] == nullptr
+            newCol++; // Move right
+        } else if (colDiff < 0 && newCol > 0 ) {    //&& field[newRow][newCol - 1] == nullptr
+            newCol--; // Move left
+        }
+    }
+
+    // Check if the new position is valid
+    if (newRow >= 0 && newRow < height && newCol >= 0 && newCol < width) {
+        // Check if the new position is occupied by a vegetable
+        if (!(template_veggie = dynamic_cast<Veggie*>(field[newRow][newCol]))) {
+            // Check if the new position is occupied by a rabbit
+            if (template_rabbit = dynamic_cast<Rabbit*>(field[newRow][newCol])) {
+                // Remove the rabbit
+                delete field[newRow][newCol];
+                field[newRow][newCol] = nullptr;
+                // Snake cannot move for 5 timer ticks
+                timerTickSnake();
+            } else if (template_captain = dynamic_cast<Captain*>(field[newRow][newCol])) {
+                // Remove the last five vegetables from the captain's basket
+                
+                int score, Point_val;
+                for (int i = 0; i < 5; i++) 
+                {
+                    if(player->getveggie()!=nullptr)
+                    {
+                        score = getScore();
+                        Point_val = player->getveggie()->getpt_val();
+                        score -= Point_val;
+                    
+                        player->popveggie();
+                    }
+                        
+                }
+                setScore(score);
+                
+                // Reset the snake to a new random, unoccupied position
+                delete snake;
+                initSnake();
+            } else {
+                // Move the snake to the new position
+                field[snake->getheightpos()][snake->getwidthpos()] = nullptr;
+                snake->setheightpos(newRow);
+                snake->setwidthpos(newCol);
+                field[newRow][newCol] = snake;
+            }
+        }
+    }
 }
