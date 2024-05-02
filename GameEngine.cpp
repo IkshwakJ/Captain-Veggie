@@ -373,12 +373,12 @@ void GameEngine::moveCptVertical(int input_direction)
             //field[h+input_direction][w] = player;
             field[h][w] = nullptr;
         }
-        else if((check_template_snake = dynamic_cast<Snake*>(field[h][w+input_direction])))
+        else if((check_template_snake = dynamic_cast<Snake*>(field[h+input_direction][w])))
         {   
-            delete field[h][w+input_direction];
-            field[h][w+input_direction] = nullptr;
-            field[h][w+input_direction] = new Captain(h, w+input_direction);
-            //field[h][w+input_direction] = player;
+            delete field[h+input_direction][w];
+            field[h+input_direction][w] = nullptr;
+            field[h+input_direction][w] = new Captain(h+input_direction, w);
+            //field[h+input_direction][w] = player;
             delete field[h][w];
             field[h][w] = nullptr;
         }
