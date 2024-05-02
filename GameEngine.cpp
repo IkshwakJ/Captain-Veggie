@@ -614,12 +614,18 @@ void GameEngine::moveSnake()
                         }
                     }
                     // Reset the snake to a new random, unoccupied position
-                    delete field[snakeRow][snakeCol];
-                    field[snakeRow][snakeCol] = nullptr;
                     if(snakeRow == captainRow && snakeCol == captainCol)//If captain moves onto the snake, should not remove the captain
                     {
-                        field[captainRow][captainCol] = new Captain(captainRow,captainCol);
-                        field[captainRow][captainCol] = player;
+                        cout<<"You ran into the snake!"<<endl;
+                        // delete field[captainRow][captainCol];
+                        // field[captainRow][captainCol] = nullptr;
+                        // field[captainRow][captainCol] = new Captain(captainRow,captainCol);
+                        // field[captainRow][captainCol] = player;
+                    }
+                    else
+                    {
+                        delete field[snakeRow][snakeCol];
+                        field[snakeRow][snakeCol] = nullptr;
                     }
                     delete snake;
                     initSnake();
@@ -688,12 +694,18 @@ void GameEngine::moveSnake()
                             }
                         }
                         // Reset the snake to a new random, unoccupied position
-                        delete field[snakeRow][snakeCol];
-                        field[snakeRow][snakeCol] = nullptr;
                         if(snakeRow == captainRow && snakeCol == captainCol)//If captain moves onto the snake, should not remove the captain
                         {
-                            field[captainRow][captainCol] = new Captain(captainRow,captainCol);
-                            field[captainRow][captainCol] = player;
+                            cout<<"You ran into the snake!"<<endl;
+                            // delete field[captainRow][captainCol];
+                            // field[captainRow][captainCol] = nullptr;
+                            // field[captainRow][captainCol] = new Captain(captainRow,captainCol);
+                            // field[captainRow][captainCol] = player;
+                        }
+                        else
+                        {
+                            delete field[snakeRow][snakeCol];
+                            field[snakeRow][snakeCol] = nullptr;
                         }
                         delete snake;
                         initSnake();
