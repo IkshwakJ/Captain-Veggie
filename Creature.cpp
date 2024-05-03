@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program defning the functions declared in the Creature class.
+*/
+
 #include"Creature.h"
 // @brief Contructor for the creature class
 // @param 1 integer input that indicates the vertical position of the creature.

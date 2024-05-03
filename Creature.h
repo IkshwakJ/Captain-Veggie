@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Header file to define the Creature class and its functions.
+*/
+
 #ifndef Creature_h
 #define Creature_h
     #include"FieldInhabitant.h"

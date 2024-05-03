@@ -1,6 +1,10 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Header file to define the FieldInhabintant class and its functions.
+*/
+
 #ifndef FieldInhabitant_h
 #define FieldInhabitant_h
-    // TODO transfer headers to main
     #include<iostream>
     #include<fstream>
     #include<vector>
@@ -24,5 +28,4 @@
             //destructor 
             virtual ~FieldInhabintant();
     };
-
 #endif

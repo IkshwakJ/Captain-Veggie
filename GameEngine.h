@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Header file to define the GameEngine class and its functions.
+*/
+
 #ifndef GameEngine_h
 #define GameEngine_h
     #include"Captain.h"
@@ -10,7 +15,6 @@
         private:
             //FieldInhabitant *** is the feild in which the entities will be populated.
             FieldInhabintant *** field;
-
             //The maximum number of vegetables that the field should have is stored in this variable.
             const int NUMBEROFVEGGIES = 30;
             //The maximum number of rabbits that may appear on the field at once.
@@ -25,6 +29,8 @@
             vector<Rabbit*> rabbits_on_field;
             //This is the list of all the possible types of vegetables that may be used tp populate the field with.
             vector<Veggie*> possible_veggie;
+            //The snake is member of the Snake class and stores position of the snake on the field.
+            Snake* snake;
             //function to populate the field with vegetables.
             void initVeggies();
             //function to initialize the position of the player at the start of the game.
@@ -48,6 +54,8 @@
             void moveRabbits();
             //This function gets user input to move the captain and calls the required function.
             void moveCaptain();
+            //This function moves the snake.
+            void moveSnake();
             //This function increments the cycle count.
             void timerTick();
             //This function informs the user of the completeion of the game and deletes the field.
