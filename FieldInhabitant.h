@@ -1,6 +1,5 @@
 #ifndef FieldInhabitant_h
 #define FieldInhabitant_h
-    // TODO transfer headers to main
     #include<iostream>
     #include<fstream>
     #include<vector>
@@ -24,5 +23,4 @@
             //destructor 
             virtual ~FieldInhabintant();
     };
-
 #endif
