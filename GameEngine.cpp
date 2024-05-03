@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program defining the functions that initialize and run the game.
+*/
+
 #include"GameEngine.h"
 // @brief This function intializes the vegetables and creates a Captain variable for the player and a snake variable for the snake, it sets the score and timer to zero.
 void GameEngine::initialzeGame()

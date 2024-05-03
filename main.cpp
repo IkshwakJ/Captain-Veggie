@@ -1,4 +1,9 @@
-    #include"GameEngine.h"
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program containing the main function which starts the game and stops when all the veggies have dissapeared and prints out the field.
+*/
+
+#include"GameEngine.h"
 
     int main()
     {

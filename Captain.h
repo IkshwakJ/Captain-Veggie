@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Header file to define the Captain class and its functions.
+*/
+
 #ifndef Captain_h
 #define Captain_h
     #include"Creature.h"

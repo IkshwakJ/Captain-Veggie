@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program defining the functions declared in the Captain class.
+*/
+
 #include"Captain.h"
 
     // @brief This is the contructor function thaat takes in input that is completely passed to the constructor of the Creature class along with the symbol for the Captain.

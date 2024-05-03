@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program defining the functions of the FieldInhabintant class.
+*/
+
 #include"FieldInhabitant.h"
 // @brief constructor, enters the passed string to member variable.
 // @param string input.
