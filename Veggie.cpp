@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program defining the Veggie class functions.
+*/
+
 #include"Veggie.h"
 // @brief The constructor of the Veggie class passes the required members to the constructor of the FieldInhabitant class.
 // @param 1 string indicating the identity of the vegetable being stored.
