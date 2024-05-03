@@ -17,6 +17,7 @@ string FieldInhabintant::getsymbol()
     return symbol;
 }
 // @brief Updates the member variable using the passed string.
+// @param 1 input_symbol is a string input that will be stored in the symbol variable.
 void FieldInhabintant::setsymbol(string input_symbol)
 {
     symbol = input_symbol;

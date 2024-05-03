@@ -15,7 +15,6 @@ Description: Header file to define the GameEngine class and its functions.
         private:
             //FieldInhabitant *** is the feild in which the entities will be populated.
             FieldInhabintant *** field;
-
             //The maximum number of vegetables that the field should have is stored in this variable.
             const int NUMBEROFVEGGIES = 30;
             //The maximum number of rabbits that may appear on the field at once.

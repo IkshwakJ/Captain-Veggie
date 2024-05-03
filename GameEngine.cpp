@@ -336,6 +336,7 @@ void GameEngine::moveRabbits()
         }
         if(bunny_move)
         {
+            //The rabbit will only move if the next position is empty or has a vegetable, which it can eat.
             if(field[new_h][new_w] == nullptr)
             {
                 field[new_h][new_w] = new Rabbit(new_h,new_w);
