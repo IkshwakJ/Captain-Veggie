@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Header file to define the GameEngine class and its functions.
+*/
+
 #ifndef GameEngine_h
 #define GameEngine_h
     #include"Captain.h"
