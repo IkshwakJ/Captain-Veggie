@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Header file to define the FieldInhabintant class and its functions.
+*/
+
 #ifndef FieldInhabitant_h
 #define FieldInhabitant_h
     #include<iostream>
