@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program defining the Veggie class functions.
+*/
+
 #ifndef Veggie_h
 #define Veggie_h
     #include"FieldInhabitant.h"
