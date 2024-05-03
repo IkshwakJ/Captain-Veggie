@@ -1,3 +1,8 @@
+/* Author: Archith J, Ikshwak Jinesh
+Date: 5-2-2024
+Description: Program defining the Snake class functions.
+*/
+
 #include"Snake.h"
 // @brief This constructor function takes in input an pass them to the constructor of the creature class, along with the symbol for the Snake.
 // @param 1 input_heightpos is an integer representing the snakes vertical position on the map.
